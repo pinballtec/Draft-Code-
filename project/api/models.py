@@ -4,8 +4,14 @@ from django.db import models
 
 
 class Paybylink(models.Model):
+    usd_eu_y = (
+        ('DOLLARS', 'USD'),
+        ('EURO', 'EU'),
+        ('STERLING', 'GBR'),
+        ('ZLOTY', 'PLN')
+    )
     created_at = models.TimeField(auto_now_add=True, blank=True)
-    currency = models.CharField(max_length=10)
+    currency = models.CharField(max_length=10, choices=usd_eu_y)
     amount = models.IntegerField(max_length=2000000000)
     description = models.CharField(max_length=200)
     bank = models.CharField(max_length=100)
