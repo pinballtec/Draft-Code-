@@ -20,8 +20,3 @@ class CardSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ConnectSerializer(serializers.Serializer):
-    pay_by_link = PaybylinkSerializer(many=True)
-    dp = DpSerializer(many=True)
-    card = CardSerializer(many=True)
-
