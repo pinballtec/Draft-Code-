@@ -1,5 +1,3 @@
-from django.shortcuts import render
-from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
@@ -14,7 +12,12 @@ from .serializers import PaybylinkSerializer, CardSerializer, DpSerializer
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
-        'Create': '/create/',
+        'Create Link': '/create_link/',
+        'Create Card': '/create_card/',
+        'Create Dp': '/create_dp/',
+        'Get Link': '/get link/',
+        'Get Card': '/get card/',
+        'Get Dp': '/get dp/',
     }
     return Response(api_urls)
 
@@ -48,3 +51,23 @@ def dp_create(request):
         raise ValidationError
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def link_get(request, pk):
+    tasks = Paybylink.objects.get(pk=pk)
+    serializer = PaybylinkSerializer(tasks, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def card_get(request, pk):
+    tasks = Card.objects.get(id=pk)
+    serializer = CardSerializer(tasks, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def dp_get(request, pk):
+    tasks = Dp.objects.get(id=pk)
+    serializer = DpSerializer(tasks, many=False)
+    return Response(serializer.data)

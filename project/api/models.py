@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 usd_eu_y = (
-        ('DOLLARS', 'USD'),
+        ('USD', 'DOLLARS'),
         ('EURO', 'EU'),
         ('STERLING', 'GBR'),
         ('ZLOTY', 'PLN')
