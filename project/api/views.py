@@ -22,14 +22,14 @@ def apiOverview(request):
     return Response(api_urls)
 
 
-@api_view(['POST'])
-def link_create(request):
-    serializer = PaybylinkSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    else:
-        raise ValidationError
-    return Response(serializer.data)
+# @api_view(['POST'])
+# def link_create(request):
+#     serializer = PaybylinkSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#     else:
+#         raise ValidationError
+#     return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -42,21 +42,21 @@ def card_create(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
-def dp_create(request):
-    serializer = DpSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    else:
-        raise ValidationError
-    return Response(serializer.data)
+# @api_view(['POST'])
+# def dp_create(request):
+#     serializer = DpSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#     else:
+#         raise ValidationError
+#     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def link_get(request, pk):
-    tasks = Paybylink.objects.get(pk=pk)
-    serializer = PaybylinkSerializer(tasks, many=False)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def link_get(request, pk):
+#     tasks = Paybylink.objects.get(pk=pk)
+#     serializer = PaybylinkSerializer(tasks, many=False)
+#     return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -66,8 +66,8 @@ def card_get(request, pk):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def dp_get(request, pk):
-    tasks = Dp.objects.get(id=pk)
-    serializer = DpSerializer(tasks, many=False)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def dp_get(request, pk):
+#     tasks = Dp.objects.get(id=pk)
+#     serializer = DpSerializer(tasks, many=False)
+#     return Response(serializer.data)
