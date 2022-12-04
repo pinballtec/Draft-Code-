@@ -3,7 +3,10 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from .models import Paybylink, Dp, Card
 from rest_framework.exceptions import ValidationError
+from django.shortcuts import render
 from .serializers import PaybylinkSerializer, CardSerializer, DpSerializer
+
+import requests
 
 
 # Create your views here.
@@ -71,3 +74,32 @@ def card_get(request, pk):
 #     tasks = Dp.objects.get(id=pk)
 #     serializer = DpSerializer(tasks, many=False)
 #     return Response(serializer.data)
+
+def main_external_api(request):
+    """getting exchange rates from external api"""
+    response_from_api = requests.get(url='https://api.exchangerate-api.com/v4/latest/USD').json()
+    currencies = response_from_api.get('rates')  # getting only rates from request
+    if request.method == 'GET':
+        context = {
+            'currencies': currencies
+        }
+
+        return render(request, 'api/index.html', context)
+
+    if request.method == 'POST':
+        from_amount = float(request.POST.get('from-amount'))
+        from_curr = request.POST.get('from-curr')
+        to_curr = request.POST.get('to-curr')
+
+        """formula for Conversion"""
+        converted_amount = round((currencies[to_curr] / currencies[from_curr]) * float(from_amount), 2)
+
+        context = {
+            'from_curr': from_curr,
+            'to_curr': to_curr,
+            'from_amount': from_amount,
+            'currencies': currencies,
+            'converted_amount': converted_amount
+        }
+
+        return render(request, 'api/index.html', context)
